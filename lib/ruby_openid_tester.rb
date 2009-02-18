@@ -1,4 +1,4 @@
-class RubyOpenIDTester
+class RubyOpenIdTester
   
   def self.release
     "0.0.1"
