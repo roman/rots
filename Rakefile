@@ -84,6 +84,7 @@ the success of the response will depend on a parameter given on the url of the a
     EOF
 
     s.files           = manifest
+    s.bindir          = 'bin'
     s.require_path    = 'lib'
     s.has_rdoc        = true
     s.extra_rdoc_files = ['README']
@@ -116,5 +117,4 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include 'README'
   rdoc.rdoc_files.include('lib/ruby_openid_tester.rb')
   rdoc.rdoc_files.include('lib/ruby_openid_tester/*.rb')
-  #rdoc.rdoc_files.include('lib/ruby_openid_tester/*/*.rb')
 end
