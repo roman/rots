@@ -3,6 +3,7 @@ require 'rack/request'
 require 'rack/utils'
 require 'openid'
 require 'openid/extension'
+require 'openid/extensions/sreg'
 require 'openid/store/memory'
 require 'openid/util'
 
@@ -16,6 +17,13 @@ module RubyOpenIdTester
                   :server
     
     def initialize()
+      @sreg_fields = {
+        'nickname' => 'johndoe',
+        'email' => 'john@doe.com',
+        'fullname' => 'John Doe',
+        'dob' => '1985-09-21',
+        'gender' => 'M'
+      }
     end
     
     def call(env)
@@ -47,6 +55,7 @@ module RubyOpenIdTester
       @request = Rack::Request.new(env)
       @server  = OpenID::Server::Server.new(OpenID::Store::Memory.new, @request.host)
       @openid_request = @server.decode_request(@request.params)
+      @openid_sreg_request = OpenID::SReg::Request.from_openid_request(@openid_request) unless @openid_request.nil?
     end
     
     def is_checkid_request?
@@ -79,9 +88,16 @@ module RubyOpenIdTester
     
     def return_successful_openid_response
       @openid_response = @openid_request.answer(true)
+      process_sreg_extension
       # TODO: Add support for SREG extension
       @server.signatory.sign(@openid_response) if @openid_response.needs_signing
       reply_consumer
+    end
+    
+    def process_sreg_extension
+      return if @openid_sreg_request.nil?
+      response = OpenID::SReg::Response.extract_response(@openid_sreg_request, @sreg_fields)
+      @openid_response.add_extension(response)
     end
     
     def return_cancel_openid_response
