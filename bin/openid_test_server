@@ -1,0 +1,19 @@
+#!/usr/bin/ruby
+
+$:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+require "rubygems"
+require "rack"
+require "ruby_openid_tester"
+
+server = Rack::Builder.new do 
+  use Rack::CommonLogger, $STDOUT
+  map "/" do
+    run RubyOpenIdTester::ServerHandler.new
+  end
+  map "/john.doe" do
+    run RubyOpenIdTester::MockIdentityHandler.new
+  end
+end
+
+puts "\x1B[32mRunning OpenID Test server on port 1123\x1B[0m"
+Rack::Handler::Mongrel.run server, :Port => 1123
