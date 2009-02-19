@@ -1,6 +1,7 @@
 # Rakefile for Rack.  -*-ruby-*-
 require 'rake/rdoctask'
 require 'rake/testtask'
+require 'spec/rake/spectask'
 
 
 desc "Run all the tests"
@@ -19,14 +20,14 @@ end
 
 # Helper to retrieve the "revision number" of the git tree.
 def git_tree_version
-  if File.directory?(".git")
-    @tree_version ||= `git describe`.strip.sub('-', '.')
-    @tree_version << ".0"  unless @tree_version.count('.') == 2
-  else
+  #if File.directory?(".git")
+  #  @tree_version ||= `git describe`.strip.sub('-', '.')
+  #  @tree_version << ".0"  unless @tree_version.count('.') == 2
+  #else
     $: << "lib"
     require 'ruby_openid_tester'
     @tree_version = RubyOpenIdTester.release
-  end
+  #end
   @tree_version
 end
 
@@ -105,6 +106,9 @@ the success of the response will depend on a parameter given on the url of the a
     p.need_tar = false
     p.need_zip = false
   end
+end
+
+Spec::Rake::SpecTask.new do |t|
 end
 
 desc "Generate RDoc documentation"
