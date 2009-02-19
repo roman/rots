@@ -5,3 +5,6 @@ module RubyOpenIdTester
   end
   
 end
+
+require "ruby_openid_tester/server_handler"
+require "ruby_openid_tester/mock_identity_handler"
