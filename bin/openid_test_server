@@ -2,18 +2,79 @@
 
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require "rubygems"
+require "optparse"
 require "rack"
 require "ruby_openid_tester"
 
-server = Rack::Builder.new do 
-  use Rack::CommonLogger, $STDOUT
-  map "/" do
-    run RubyOpenIdTester::ServerHandler.new
+server_options = {
+  :port => 1123,
+  :verbose => false,
+  :config => DATA
+}
+
+opts = OptionParser.new do |opts|
+  opts.banner = "Usage: openid_test_server [options]"
+  
+  opts.separator ""
+  opts.separator "Options:"
+  
+  opts.on("-p", "--port PORT",
+            "use PORT (default: 1123)") do |port|
+    server_options[:port] = port
   end
-  map "/john.doe" do
-    run RubyOpenIdTester::MockIdentityHandler.new
+  
+  opts.on("-c", "--config FILE.yaml",
+            "server configuration YAML file") do |config_path|
+    abort "\x1B[31mConfiguration file #{config_path} not found\x1B[0m" unless File.exists?(config_path)
+    server_options[:config] = File.new(config_path)
+  end
+  
+  opts.on("-v", "--verbose",
+            "If specified, the server will be in verbose mode") do 
+    server_options[:verbose] = true
+  end
+  
+  opts.separator ""
+  opts.separator "Common options:"
+  
+  opts.on_tail("-h", "--help", "Show this help message") do
+    puts opts
+    exit
+  end
+  
+end
+
+opts.parse!(ARGV)
+
+config = YAML.load(server_options[:config])
+
+server = Rack::Builder.new do 
+  use Rack::Lint
+  if server_options[:verbose]
+    use Rack::CommonLogger, $STDOUT
+    use Rack::ShowExceptions
+  end
+  map "/" do
+    run RubyOpenIdTester::ServerHandler.new(config)
+  end
+  map "/#{config['identity']}" do
+    run RubyOpenIdTester::MockIdentityHandler.new(config)
   end
 end
 
-puts "\x1B[32mRunning OpenID Test server on port 1123\x1B[0m"
-Rack::Handler::Mongrel.run server, :Port => 1123
+puts "\x1B[32mRunning OpenID Test server on port 1123\x1B[0m" if server_options[:verbose]
+begin 
+  Rack::Handler::Mongrel.run server, :Port => server_options[:port]
+rescue LoadError
+  Rack::Handler::WEBrick.run server, :Port => server_options[:port]
+end
+
+__END__
+# Default configuration file
+identity: john.doe
+sreg:
+  nickname: jdoe
+  fullname: John Doe
+  email: jhon@doe.com
+  dob: 1985-09-21
+  gender: M

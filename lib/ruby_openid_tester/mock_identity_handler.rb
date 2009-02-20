@@ -4,7 +4,8 @@ require 'rack/utils'
 
 class RubyOpenIdTester::MockIdentityHandler 
   
-  def initialize()
+  def initialize(config)
+    @config = config
   end
   
   def call(env)

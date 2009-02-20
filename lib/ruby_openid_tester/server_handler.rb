@@ -16,14 +16,8 @@ module RubyOpenIdTester
                   :response, :openid_response,
                   :server
     
-    def initialize()
-      @sreg_fields = {
-        'nickname' => 'johndoe',
-        'email' => 'john@doe.com',
-        'fullname' => 'John Doe',
-        'dob' => '1985-09-21',
-        'gender' => 'M'
-      }
+    def initialize(config)
+      @sreg_fields = config['sreg']
     end
     
     def call(env)
