@@ -13,7 +13,7 @@ server_options = {
 }
 
 opts = OptionParser.new do |opts|
-  opts.banner = "Usage: openid_test_server [options]"
+  opts.banner = "Usage: rots [options]"
   
   opts.separator ""
   opts.separator "Options:"
