@@ -10,7 +10,7 @@ require 'openid/util'
 
 module RubyOpenIdTester
   
-  class ServerHandler
+  class ServerApp
     
     attr_accessor :request,:openid_request,
                   :response, :openid_response,

@@ -55,10 +55,10 @@ server = Rack::Builder.new do
     use Rack::ShowExceptions
   end
   map "/" do
-    run RubyOpenIdTester::ServerHandler.new(config)
+    run RubyOpenIdTester::ServerApp.new(config)
   end
   map "/#{config['identity']}" do
-    run RubyOpenIdTester::MockIdentityHandler.new(config)
+    run RubyOpenIdTester::MockIdentityPage.new(config)
   end
 end
 

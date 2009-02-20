@@ -2,7 +2,7 @@ gem 'ruby-openid', '~> 2' if defined? Gem
 require 'rack/response'
 require 'rack/utils'
 
-class RubyOpenIdTester::MockIdentityHandler 
+class RubyOpenIdTester::MockIdentityPage 
   
   def initialize(config)
     @config = config
