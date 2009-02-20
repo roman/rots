@@ -25,8 +25,8 @@ def git_tree_version
   #  @tree_version << ".0"  unless @tree_version.count('.') == 2
   #else
     $: << "lib"
-    require 'ruby_openid_tester'
-    @tree_version = RubyOpenIdTester.release
+    require 'ruby_openid_test_server'
+    @tree_version = RubyOpenIdTestServer.release
   #end
   @tree_version
 end

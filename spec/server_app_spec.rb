@@ -1,11 +1,11 @@
 require File.join(File.dirname(__FILE__), 'spec_helper')
 
-describe RubyOpenIdTester::ServerApp do
+describe RubyOpenIdTestServer::ServerApp do
 
   describe "when the request is not an OpenID request" do
 
     it "should return a helpful message saying that is an OpenID endpoint" do
-      request  = Rack::MockRequest.new(RubyOpenIdTester::ServerApp.new('sreg' => {}))
+      request  = Rack::MockRequest.new(RubyOpenIdTestServer::ServerApp.new('sreg' => {}))
       response = request.get("/")
       response.should be_ok
       response.body.should == "This is an OpenID endpoint"
@@ -16,7 +16,7 @@ describe RubyOpenIdTester::ServerApp do
   describe "when the request is an OpenID request" do
     
     before(:each) do
-      @request = Rack::MockRequest.new(RubyOpenIdTester::ServerApp.new(
+      @request = Rack::MockRequest.new(RubyOpenIdTestServer::ServerApp.new(
         'identity' => 'john.doe',
         'sreg' => {
           'email' => "john@doe.com",

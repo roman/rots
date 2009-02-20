@@ -8,7 +8,7 @@ require 'openid/store/memory'
 require 'openid/util'
 
 
-module RubyOpenIdTester
+module RubyOpenIdTestServer
   
   class ServerApp
     

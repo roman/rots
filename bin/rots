@@ -4,7 +4,7 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require "rubygems"
 require "optparse"
 require "rack"
-require "ruby_openid_tester"
+require "ruby_openid_test_server"
 
 server_options = {
   :port => 1123,
@@ -55,10 +55,10 @@ server = Rack::Builder.new do
     use Rack::ShowExceptions
   end
   map "/" do
-    run RubyOpenIdTester::ServerApp.new(config)
+    run RubyOpenIdTestServer::ServerApp.new(config)
   end
   map "/#{config['identity']}" do
-    run RubyOpenIdTester::MockIdentityPage.new(config)
+    run RubyOpenIdTestServer::MockIdentityPage.new(config)
   end
 end
 
