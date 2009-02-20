@@ -17,6 +17,7 @@ class RubyOpenIdTester::MockIdentityPage
   <link rel="openid2.provider" href="http://localhost:1123" />
   </head>
   <body>
+    <h1>This is #{@config['identity']} identity page</h1>
   </body>
 </html>
       HERE
