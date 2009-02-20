@@ -77,7 +77,7 @@ module RubyOpenIdTester
     end
     
     def checkid_request_is_valid?
-      @request.params['test.openid'] == 'true'
+      @request.params['openid.success'] == 'true'
     end
     
     def return_successful_openid_response

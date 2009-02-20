@@ -46,7 +46,7 @@ describe RubyOpenIdTester::ServerApp do
         describe "with a success flag" do
 
           it "should return an openid.mode equal to id_res" do
-            response = checkid_setup(@request, 'test.openid' => 'true')
+            response = checkid_setup(@request, 'openid.success' => 'true')
             params = openid_params(response)
             params['openid.mode'].should == 'id_res'
           end
@@ -66,14 +66,14 @@ describe RubyOpenIdTester::ServerApp do
         describe "using SREG extension with a success flag" do
           
           it "should return an openid.mode equal to id_res" do
-            response = checkid_setup(@request, 'test.openid' => 'true')
+            response = checkid_setup(@request, 'openid.success' => 'true')
             params = openid_params(response)
             params['openid.mode'].should == 'id_res'
           end
           
           it "should return all the sreg fields" do
             response = checkid_setup(@request, {
-              'test.openid' => true,
+              'openid.success' => true,
               'openid.ns.sreg' => OpenID::SReg::NS_URI,
               'openid.sreg.required' => 'email,nickname,fullname',
               'openid.sreg.optional' => 'dob,gender'
