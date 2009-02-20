@@ -8,7 +8,7 @@ require "ruby_openid_tester"
 
 server_options = {
   :port => 1123,
-  :verbose => false,
+  :verbose => true,
   :config => DATA
 }
 
@@ -29,9 +29,9 @@ opts = OptionParser.new do |opts|
     server_options[:config] = File.new(config_path)
   end
   
-  opts.on("-v", "--verbose",
-            "If specified, the server will be in verbose mode") do 
-    server_options[:verbose] = true
+  opts.on("-s", "--silent",
+            "If specified, the server will be in silent mode") do 
+    server_options[:verbose] = false
   end
   
   opts.separator ""
