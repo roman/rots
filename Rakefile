@@ -73,19 +73,20 @@ rescue LoadError
   # Too bad.
 else
   spec = Gem::Specification.new do |s|
-    s.name            = "ruby-openid-tester"
+    s.name            = "rots"
     s.version         = gem_version
     s.platform        = Gem::Platform::RUBY
     s.summary         = "an OpenID server for making tests of OpenID clients implementations"
 
     s.description = <<-EOF
-ruby-openid-tester provides a basic OpenID server made in top of the Rack gem.
+Ruby OpenID Test Server (ROST) provides a basic OpenID server made in top of the Rack gem.
 With this small server, you can make dummy OpenID request for testing purposes,
 the success of the response will depend on a parameter given on the url of the authentication request.
     EOF
 
     s.files           = manifest
     s.bindir          = 'bin'
+    s.executables     << 'rots'
     s.require_path    = 'lib'
     s.has_rdoc        = true
     s.extra_rdoc_files = ['README']
@@ -93,10 +94,10 @@ the success of the response will depend on a parameter given on the url of the a
 
     s.author          = 'Roman Gonzalez'
     s.email           = 'romanandreg@gmail.com'
-    s.homepage        = ''
-    s.rubyforge_project = 'ruby-openid-tester'
+    s.homepage        = 'http://github.com/roman'
+    s.rubyforge_project = 'rots'
 
-    #s.add_development_dependency 'rspec'
+    s.add_development_dependency 'rspec'
     s.add_development_dependency 'rack'
     s.add_development_dependency 'ruby-openid', '~> 2.0.0'
   end
@@ -115,10 +116,10 @@ desc "Generate RDoc documentation"
 Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.options << '--line-numbers' << '--inline-source' <<
     '--main' << 'README' <<
-    '--title' << 'Rack Documentation' <<
+    '--title' << 'ROTS Documentation' <<
     '--charset' << 'utf-8'
   rdoc.rdoc_dir = "doc"
   rdoc.rdoc_files.include 'README'
-  rdoc.rdoc_files.include('lib/ruby_openid_tester.rb')
-  rdoc.rdoc_files.include('lib/ruby_openid_tester/*.rb')
+  rdoc.rdoc_files.include('lib/ruby_openid_test_server.rb')
+  rdoc.rdoc_files.include('lib/ruby_openid_test_server/*.rb')
 end
