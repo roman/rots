@@ -1,7 +1,7 @@
 = Ruby OpenID Test Server (ROTS), a dummy OpenID server that makes consumer tests dead easy.
 
 ROTS is a minimal implementation of an OpenID server, developed on top of the Rack middleware, this
-server provides a easy to use interface to make testing OpenID consumers really easy.
+server provides an easy to use interface to make testing OpenID consumers really easy.
 
 == No more mocks
 
@@ -16,8 +16,8 @@ saying that you want the authentication to be successful. It handles SREG extens
 When you install the ROTS gem, a binary called rots is provided for starting the server (for more
 info about what options you have when executing this file, check the -h option). 
 
-By default, the rots execute a server with a test user called "John Doe", with an identity
-called "john.doe". If you want to use your own test user name, you can specify a config file to rots. The
+By default, rots will have a test user called "John Doe", with an OpenID identity "john.doe". 
+If you want to use your own test user name, you can specify a config file to rots. The
 default configuration file looks like this:
 
 # Default configuration file
@@ -29,7 +29,7 @@ sreg:
   dob: 1985-09-21
   gender: M
 
-You can specify a new file with your test user data specifying the option --config.
+You can specify a new config file using the option --config.
 
 == Getting Started
 
