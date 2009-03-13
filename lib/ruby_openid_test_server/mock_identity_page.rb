@@ -4,7 +4,8 @@ require 'rack/utils'
 
 class RubyOpenIdTestServer::MockIdentityPage 
   
-  def initialize(config)
+  def initialize(config, server_options)
+    @server_options = server_options
     @config = config
   end
   
@@ -15,8 +16,8 @@ class RubyOpenIdTestServer::MockIdentityPage
       response.write <<-HERE
 <html>
   <head>
-  <link rel="openid.server" href="http://localhost:1123/#{flag}" />
-  <link rel="openid2.provider" href="http://localhost:1123/#{flag}" />
+  <link rel="openid.server" href="http://localhost:#{@server_options[:port]}/server#{flag}" />
+  <link rel="openid2.provider" href="http://localhost:#{@server_options[:port]}/server#{flag}" />
   </head>
   <body>
     <h1>This is #{@config['identity']} identity page</h1>

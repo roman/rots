@@ -5,7 +5,7 @@ describe RubyOpenIdTestServer::ServerApp do
   describe "when the request is not an OpenID request" do
 
     it "should return a helpful message saying that is an OpenID endpoint" do
-      request  = Rack::MockRequest.new(RubyOpenIdTestServer::ServerApp.new('sreg' => {}))
+      request  = Rack::MockRequest.new(RubyOpenIdTestServer::ServerApp.new({'sreg' => {}}, {}))
       response = request.get("/")
       response.should be_ok
       response.body.should == "This is an OpenID endpoint"
@@ -16,7 +16,7 @@ describe RubyOpenIdTestServer::ServerApp do
   describe "when the request is an OpenID request" do
     
     before(:each) do
-      @request = Rack::MockRequest.new(RubyOpenIdTestServer::ServerApp.new(
+      @request = Rack::MockRequest.new(RubyOpenIdTestServer::ServerApp.new({
         'identity' => 'john.doe',
         'sreg' => {
           'email' => "john@doe.com",
@@ -24,7 +24,8 @@ describe RubyOpenIdTestServer::ServerApp do
           'fullname' => "John Doe",
           'dob' => "1985-09-21",
           'gender' => "M"
-        }
+        }},
+        {}
       ))
     end
     
@@ -91,4 +92,5 @@ describe RubyOpenIdTestServer::ServerApp do
       end
     end
   end
+
 end

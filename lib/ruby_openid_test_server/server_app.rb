@@ -16,7 +16,8 @@ module RubyOpenIdTestServer
                   :response, :openid_response,
                   :server
     
-    def initialize(config)
+    def initialize(config, server_options)
+      @server_options = server_options
       @sreg_fields = config['sreg']
     end
     
@@ -38,8 +39,8 @@ module RubyOpenIdTestServer
     def on_openid_request(env)
       create_wrappers(env)
       if @openid_request.nil?
-        [200, {'Content-Type' => 'text/plain'}, 
-          ["This is an OpenID endpoint"] ]
+        [200, {'Content-Type' => 'text/html'}, 
+          ["<html><body><h1>ROTS => This is an OpenID endpoint</h1></body></html>"] ]
       else
         yield
       end

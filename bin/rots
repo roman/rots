@@ -8,6 +8,7 @@ require "rack"
 require "ruby_openid_test_server"
 
 server_options = {
+  :debugger => false,
   :port => 1123,
   :verbose => true,
   :config => <<-DEFAULT_CONFIG
@@ -45,6 +46,10 @@ opts = OptionParser.new do |opts|
     server_options[:verbose] = false
   end
   
+  opts.on("-d", "--debugger") do
+    server_options[:debugger] = true
+  end
+  
   opts.separator ""
   opts.separator "Common options:"
   
@@ -59,17 +64,19 @@ opts.parse!(ARGV)
 
 config = YAML.load(server_options[:config])
 
+require "ruby-debug" if server_options[:debugger]
+
 server = Rack::Builder.new do 
   use Rack::Lint
   if server_options[:verbose]
-    use Rack::CommonLogger, $STDOUT
+    use Rack::CommonLogger, STDOUT
     use Rack::ShowExceptions
   end
-  map "/" do
-    run RubyOpenIdTestServer::ServerApp.new(config)
+  map ("/%s" % config['identity']) do
+    run RubyOpenIdTestServer::MockIdentityPage.new(config, server_options)
   end
-  map "/#{config['identity']}" do
-    run RubyOpenIdTestServer::MockIdentityPage.new(config)
+  map "/server" do
+    run RubyOpenIdTestServer::ServerApp.new(config, server_options)
   end
 end
 
