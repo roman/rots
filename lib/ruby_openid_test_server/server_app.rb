@@ -4,8 +4,9 @@ require 'rack/utils'
 require 'openid'
 require 'openid/extension'
 require 'openid/extensions/sreg'
-require 'openid/store/memory'
+require 'openid/store/filesystem'
 require 'openid/util'
+require 'fileutils'
 
 
 module RubyOpenIdTestServer
@@ -48,8 +49,7 @@ module RubyOpenIdTestServer
     
     def create_wrappers(env)
       @request = Rack::Request.new(env)
-      @server  = OpenID::Server::Server.new(
-        OpenID::Store::Filesystem.new(@server_options[:storage]), @request.host)
+      @server  = OpenID::Server::Server.new(storage, @request.host)
       @openid_request = @server.decode_request(@request.params)
       @openid_sreg_request = OpenID::SReg::Request.from_openid_request(@openid_request) unless @openid_request.nil?
     end
@@ -121,6 +121,12 @@ module RubyOpenIdTestServer
     def bad_request()
       [ 400, {'Content-Type'=>'text/plain', 'Content-Length'=>'0'},
         [] ]
+    end
+    
+    def storage
+      # create the folder if it doesn't exist
+      FileUtils.mkdir_p(@server_options[:storage]) unless File.exist?(@server_options[:storage])
+      OpenID::Store::Filesystem.new(@server_options[:storage])
     end
     
     def success(text="")
