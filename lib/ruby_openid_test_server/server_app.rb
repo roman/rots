@@ -48,7 +48,8 @@ module RubyOpenIdTestServer
     
     def create_wrappers(env)
       @request = Rack::Request.new(env)
-      @server  = OpenID::Server::Server.new(OpenID::Store::Memory.new, @request.host)
+      @server  = OpenID::Server::Server.new(
+        OpenID::Store::Filesystem.new(@server_options[:storage]), @request.host)
       @openid_request = @server.decode_request(@request.params)
       @openid_sreg_request = OpenID::SReg::Request.from_openid_request(@openid_request) unless @openid_request.nil?
     end

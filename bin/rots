@@ -11,6 +11,7 @@ server_options = {
   :debugger => false,
   :port => 1123,
   :verbose => true,
+  :storage => './tmp/rots',
   :config => <<-DEFAULT_CONFIG
 # Default configuration file
 identity: john.doe
@@ -33,6 +34,11 @@ opts = OptionParser.new do |opts|
   opts.on("-p", "--port PORT",
             "use PORT (default: 1123)") do |port|
     server_options[:port] = port
+  end
+  
+  opts.on("-s", "--storage PATH",
+            "use PATH as the OpenID Server storage path (default: ./tmp/rots)") do |storage_path|
+    server_options[:storage] = storage_path
   end
   
   opts.on("-c", "--config FILE.yaml",
