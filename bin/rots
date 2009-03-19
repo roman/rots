@@ -11,7 +11,7 @@ server_options = {
   :debugger => false,
   :port => 1123,
   :verbose => true,
-  :storage => File.join('.', 'tmp', 'rots')
+  :storage => File.join('.', 'tmp', 'rots'),
   :config => <<-DEFAULT_CONFIG
 # Default configuration file
 identity: john.doe
