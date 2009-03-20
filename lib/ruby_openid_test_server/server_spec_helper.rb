@@ -1,3 +1,5 @@
+require "openid/consumer"
+require "openid/consumer/checkid_request.rb"
 require "ruby_openid_test_server/server_app"
 
 module RubyOpenIdTestServer::ServerSpecHelper
@@ -6,6 +8,11 @@ module RubyOpenIdTestServer::ServerSpecHelper
     base.class_eval do
       cattr_accessor :rots_config
       cattr_accessor :rots_server_options
+    end
+    [:verify_discovery_results, :check_signature].each do |method_name|
+      OpenID::Consumer::IdResHandler.class_eval do
+        define_method(method_name) { }
+      end
     end
   end
   
@@ -19,7 +26,7 @@ module RubyOpenIdTestServer::ServerSpecHelper
     
     # invoking the OpenID consumer with the options of the response of the ServerApp
     if defined?(Webrat)
-      visit(openid_response_uri.path, "get", openid_response_qs)
+      visit(openid_response_uri.to_s)
     else
       get(openid_response_uri.path, openid_response_qs)
     end
