@@ -1,8 +1,9 @@
-gem 'ruby-openid', '~> 2' if defined? Gem
+require 'rack/request'
 require 'rack/response'
 require 'rack/utils'
+require 'openid'
 
-class RubyOpenIdTestServer::MockIdentityPage 
+class Rots::IdentityPageApp 
   
   def initialize(config, server_options)
     @server_options = server_options

@@ -2,9 +2,9 @@ $:.unshift(File.dirname(__FILE__), '..', 'lib')
 require "rubygems"
 require "spec"
 require "rack"
-require "ruby_openid_test_server"
+require "rots"
 
-module RubyOpenIdTestServer::RequestHelper
+module Rots::RequestHelper
   
   def checkid_setup(request, params={}, with_associate=true)
     assoc_handle = make_association(request) if with_associate
@@ -69,5 +69,5 @@ module RubyOpenIdTestServer::RequestHelper
 end
 
 Spec::Runner.configure do |config|
-  config.include RubyOpenIdTestServer::RequestHelper
+  config.include Rots::RequestHelper
 end

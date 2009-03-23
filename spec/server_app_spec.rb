@@ -1,11 +1,11 @@
 require File.join(File.dirname(__FILE__), 'spec_helper')
 
-describe RubyOpenIdTestServer::ServerApp do
+describe Rots::ServerApp do
 
   describe "when the request is not an OpenID request" do
 
     it "should return a helpful message saying that is an OpenID endpoint" do
-      request  = Rack::MockRequest.new(RubyOpenIdTestServer::ServerApp.new({'sreg' => {}}, 
+      request  = Rack::MockRequest.new(Rots::ServerApp.new({'sreg' => {}}, 
         {:storage => File.join(*%w(. tmp rots)) }))
       response = request.get("/")
       response.should be_ok
@@ -17,7 +17,7 @@ describe RubyOpenIdTestServer::ServerApp do
   describe "when the request is an OpenID request" do
     
     before(:each) do
-      @request = Rack::MockRequest.new(RubyOpenIdTestServer::ServerApp.new({
+      @request = Rack::MockRequest.new(Rots::ServerApp.new({
         'identity' => 'john.doe',
         'sreg' => {
           'email' => "john@doe.com",

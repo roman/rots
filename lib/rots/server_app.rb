@@ -1,15 +1,14 @@
-gem 'ruby-openid', '~> 2' if defined? Gem
-require 'rack/request'
-require 'rack/utils'
 require 'openid'
 require 'openid/extension'
 require 'openid/extensions/sreg'
 require 'openid/store/filesystem'
 require 'openid/util'
+require 'rack/request'
+require 'rack/utils'
 require 'fileutils'
 
 
-module RubyOpenIdTestServer
+module Rots
   
   class ServerApp
     
