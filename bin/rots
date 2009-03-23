@@ -5,7 +5,7 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require "rubygems"
 require "optparse"
 require "rack"
-require "ruby_openid_test_server"
+require "rots"
 
 server_options = {
   :debugger => false,
@@ -79,10 +79,10 @@ server = Rack::Builder.new do
     use Rack::ShowExceptions
   end
   map ("/%s" % config['identity']) do
-    run RubyOpenIdTestServer::MockIdentityPage.new(config, server_options)
+    run Rots::IdentityPageApp.new(config, server_options)
   end
   map "/server" do
-    run RubyOpenIdTestServer::ServerApp.new(config, server_options)
+    run Rots::ServerApp.new(config, server_options)
   end
 end
 

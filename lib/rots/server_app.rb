@@ -48,7 +48,7 @@ module Rots
     
     def create_wrappers(env)
       @request = Rack::Request.new(env)
-      @server  = OpenID::Server::Server.new(storage, @request.host)
+      @server  = OpenID::Server::Server.new(storage, op_endpoint)
       @openid_request = @server.decode_request(@request.params)
       @openid_sreg_request = OpenID::SReg::Request.from_openid_request(@openid_request) unless @openid_request.nil?
     end
@@ -130,6 +130,16 @@ module Rots
     
     def success(text="")
       Rack::Response.new(text).finish
+    end
+    
+    def op_endpoint
+      if @request.url =~ /(.*\?openid.success=true)/
+        $1
+      elsif @request.url =~ /([^?]*)/
+        $1
+      else
+        nil
+      end
     end
 
   end
