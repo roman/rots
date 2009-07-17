@@ -1,5 +1,7 @@
 require File.join(File.dirname(__FILE__), 'spec_helper')
 
+# This is just a comment test
+
 describe Rots::ServerApp do
 
   describe "when the request is not an OpenID request" do
