@@ -6,6 +6,7 @@ module Rots
   
 end
 
+require 'yaml'
 require "rots/server_app"
 require "rots/identity_page_app"
 require "rots/test_helper"
