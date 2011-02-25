@@ -62,11 +62,11 @@ module Rots
     end
     
     def process_immediate_checkid_request
-      # TODO: We should enable the user to configure
-      # if she wants immediate request support or not
-      url = OpenID::Util.append_args(@openid_request.return_to, 
-        @request.params.merge('openid.mode' => 'setup_needed'))
-      redirect(url)
+      if checkid_immediate_is_valid?
+        return_successful_openid_response
+      else
+        return_setup_needed_openid_response
+      end
     end
     
     def process_checkid_request
@@ -80,7 +80,11 @@ module Rots
     def checkid_request_is_valid?
       @request.params['openid.success'] == 'true'
     end
-    
+
+    def checkid_immediate_is_valid?
+      @request.params['openid.success'] == 'true'
+    end
+        
     def return_successful_openid_response
       @openid_response = @openid_request.answer(true)
       process_sreg_extension
@@ -99,6 +103,12 @@ module Rots
       redirect(@openid_request.cancel_url)
     end
     
+    def return_setup_needed_openid_response
+      setup_needed_args = @request.params.merge('openid.mode' => 'setup_needed', 'user_setup_url' => '')
+      url = OpenID::Util.append_args(@openid_request.return_to, setup_needed_args)
+      redirect(url)
+    end
+
     def reply_consumer
       web_response = @server.encode_response(@openid_response)
       case web_response.code
