@@ -37,10 +37,25 @@ describe Rots::ServerApp do
 
       describe "and is immediate" do
 
-        it "should return an openid.mode equal to setup_needed" do
-          response = checkid_immediate(@request)
-          params = openid_params(response)
-          params['openid.mode'].should == 'setup_needed'
+        describe "with a success flag" do
+
+          it "should return an openid.mode equal to id_res" do
+            response = checkid_setup(@request, 'openid.success' => 'true')
+            params = openid_params(response)
+            params['openid.mode'].should == 'id_res'
+          end
+
+        end
+
+        describe "without a success flag" do
+
+          it "should return an openid.mode equal to setup_needed" do
+            response = checkid_immediate(@request)
+            params = openid_params(response)
+            params['openid.mode'].should == 'setup_needed'
+            params['user_setup_url'].should == ''
+          end
+
         end
 
       end
