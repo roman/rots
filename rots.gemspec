@@ -24,6 +24,7 @@ the success of the response will depend on a parameter given on the url of the a
   s.email           = 'romanandreg@gmail.com'
   s.homepage        = 'http://github.com/roman'
   s.rubyforge_project = 'rots'
+  s.license         = 'MIT'
 
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rack'
