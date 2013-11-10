@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.description = <<-EOF
 Ruby OpenID Test Server (ROST) provides a basic OpenID server made in top of the Rack gem.
 With this small server, you can make dummy OpenID request for testing purposes,
-the success of the response will depend on a parameter given on the url of the authentication request.
+the success of the response will depend on a parameter given on the URL of the authentication request.
   EOF
 
   s.files           = ["AUTHORS", "README", "Rakefile", "bin/rots", "lib/rots.rb", "lib/rots/identity_page_app.rb", "lib/rots/server_app.rb", "lib/rots/test_helper.rb","rots.gemspec", "spec/server_app_spec.rb", "spec/spec_helper.rb"] 
