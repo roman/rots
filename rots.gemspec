@@ -1,8 +1,10 @@
 # -*- encoding: utf-8 -*-
+$:.push File.expand_path("../lib", __FILE__)
+require "rots/version"
 
 Gem::Specification.new do |s|
   s.name            = "rots"
-  s.version         = '0.2.1'
+  s.version         = Rots::VERSION
   s.platform        = Gem::Platform::RUBY
   s.summary         = "an OpenID server for making tests of OpenID clients implementations"
 
@@ -26,7 +28,7 @@ the success of the response will depend on a parameter given on the URL of the a
   s.rubyforge_project = 'rots'
   s.license         = 'MIT'
 
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rack'
-  s.add_development_dependency 'ruby-openid'
+  s.add_development_dependency 'rspec', "~> 2.14.1"
+  s.add_development_dependency 'rack', "~> 1.5.2"
+  s.add_development_dependency 'ruby-openid', "~> 2.3.0"
 end
