@@ -1,7 +1,7 @@
 $:.unshift(File.dirname(__FILE__), '..', 'lib')
-require "rubygems"
-require "spec"
-require "rack"
+require 'rubygems'
+require 'bundler/setup'
+require 'rack/mock'
 require "rots"
 
 module Rots::RequestHelper
@@ -68,6 +68,6 @@ module Rots::RequestHelper
   
 end
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.include Rots::RequestHelper
 end
